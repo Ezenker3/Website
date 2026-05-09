@@ -1,0 +1,1850 @@
+<!-- /* python -m http.server 8000 */
+/* cd C:\Users\Ezenker\Desktop\Web\Website */
+/* http://localhost:8000 */ -->
+<!--  Blue: #125fe9
+      Yellow: #ffc114
+      Orange: #f7630d -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethan Zenker</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Style Block -->
+  <style>
+    /* General Style */
+    body {
+      background-color: #fffbf2;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      color: #333;
+      text-align: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    header {
+      background-color: #333333;
+      color: white;
+      padding: 10px 0;
+      z-index: 10;
+    }
+
+    .accent-left {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 100vh;
+      width: auto;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .accent-right {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      height: 100vh;
+      width: auto;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    header nav {
+      display: flex;
+      justify-content: center;
+    }
+
+    header nav a {
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
+
+    header nav a:hover {
+      background-color: #575757;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 30px;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .accent-left, .accent-right {
+      display: block; 
+    }
+
+    body.homepage-active .accent-left,
+    body.homepage-active .accent-right {
+      display: none; 
+    }
+
+    .accent-left,
+    .accent-right {
+      display: block;
+    }
+
+    body.homepage-active .accent-left,
+    body.homepage-active .accent-right {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      body.article-active .accent-left,
+      body.article-active .accent-right {
+        display: none;
+      }
+    }
+
+    /* Homepage Style */
+   .headshot {
+      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+      margin-top: 30px;
+    }
+
+    .intro-container {
+      width: 100%;
+      min-height: 100vh; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5vw;
+      gap: 5vh;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .headshot {
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      object-fit: cover;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+      animation-delay: 0.5s;
+    }
+
+    .intro-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+      animation-delay: 1.5s;
+    }
+
+    .intro-text h1, .intro-text h2 {
+      margin: 0;
+      color: #333;
+    }
+
+    .intro-text h1 {
+      font-size: 3rem;
+    }
+
+    .intro-text h2 {
+      font-size: 5rem;
+      color: #125fe9;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .intro-container {
+        flex-direction: row;
+        justify-content: center;
+        text-align: center;
+        gap: 5vh;
+        padding: 5vw;
+        margin-top: -10vh;
+      }
+
+      .headshot {
+        width: 700px;
+        height: 700px;
+      }
+
+      .intro-text h1 {
+        font-size: 7rem;
+      }
+
+      .intro-text h2 {
+        font-size: 11rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .intro-container {
+        margin-top: -20vh; 
+      }
+    }
+
+    .bio-section {
+      max-width: 90vw;
+      margin: 0 auto;
+      margin-top: 40px;
+      margin-bottom: 60px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 90%, rgba(0, 0, 0, 0.03) 100%);
+      padding: 1rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: left;
+      animation: fadeInUp 1s ease-out forwards;
+      animation-delay: 2s;
+      opacity: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .bio-section {
+        max-width: 1000px;
+        font-size: 1.25rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .bio-section div[style] {
+        max-height: none !important; 
+        overflow: visible !important;
+      }
+      .bio-section .read-more-btn {
+        display: none !important;
+      }
+    }
+
+    .read-more-btn {
+      background-color: #333;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease;
+      position: absolute;
+      bottom: 16px; 
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    .read-more-btn:hover {
+      background-color: #555;
+    }
+
+    .read-more-btn svg {
+      fill: white;
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+    }
+
+    @media (max-width: 767px) {
+      .bio-section::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        border-radius: inherit;
+        z-index: 5;
+        opacity: 1;
+      }
+
+      .bio-section.expanded::after {
+        opacity: 0;
+      }
+    }
+
+    .scroll-hint {
+      position: fixed;
+      bottom: 80px; 
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      animation: bounce 1.5s infinite;
+    }
+
+    .scroll-hint button {
+      pointer-events: auto; 
+      background: transparent;
+      border: none;
+      cursor: pointer; 
+      padding: 0;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(10px);
+      }
+    }
+
+   .education-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .education-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .education-grid.odd .education-card:last-child {
+        grid-column: 1 / span 2;
+        justify-self: center;
+        width: calc(50% - 0.5rem);
+      }
+    }
+
+    .education-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 90%, rgba(0, 0, 0, 0.03) 100%);
+      padding: 1rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      animation: fadeInUp 1s ease-out forwards;
+      animation-delay: 0.2s;
+      opacity: 0;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
+
+        display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%; 
+      min-height: 240px; 
+    }
+
+    .education-card img.logo {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 767px) {
+      .experience-grid {
+        padding: 1rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .education-card {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    .education-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .education-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      height: 100%;
+    }
+
+   .experience-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .experience-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .experience-grid.odd .experience-card:last-child {
+        grid-column: 1 / span 2;
+        justify-self: center;
+        width: calc(50% - 0.5rem);
+      }
+    }
+
+    .experience-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 90%, rgba(0, 0, 0, 0.03) 100%);
+      padding: 1rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      animation: fadeInUp 1s ease-out forwards;
+      animation-delay: 0.2s;
+      opacity: 0;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
+
+        display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%; 
+      min-height: 240px; 
+    }
+
+    .experience-card img.logo {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 767px) {
+      .experience-grid {
+        padding: 1rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .experience-card {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    .experience-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .experience-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      height: 100%;
+    }
+
+    .logo-box {
+      width: 100%;
+      height: 80px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .logo-box img.logo {
+      max-height: 100%;
+      max-width: 100%;
+      height: auto;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 1rem auto;
+      width: auto;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    /* Articles Style */
+    .article-page {
+      padding-top: 3.5rem;
+    }
+
+    .article-content h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-primary {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #555;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+    }
+
+    .article-content {
+      max-width: 800px;
+      margin: 0 auto;       
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #333;
+      text-align: left;       
+    }
+
+    .article-content img.float-left {
+      float: left;
+      margin-right: 20px;
+      margin-bottom: 20px;
+      width: 40%;
+      max-width: 300px;
+      border-radius: 10px;
+    }
+
+    .article-content img.float-right {
+      float: right;
+      margin-left: 20px;
+      margin-bottom: 20px;
+      width: 40%;
+      max-width: 300px;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .article-content img.float-left,
+      .article-content img.float-right {
+        float: none;
+        display: block;
+        margin: 0 auto 20px auto;
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+
+    #article-single-image-lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.99);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+
+    #article-lightbox-img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 8px;
+    }
+
+    #article-lightbox-close {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      font-size: 2rem;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 10001;
+    }
+
+    /* Blog Style */
+    .blog-post {
+      position: relative;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 90%, rgba(0, 0, 0, 0.1) 100%);
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      padding: 20px 20px 60px 20px;
+      max-width: 600px;
+      text-align: left;
+    }
+
+    .blog-date {
+      font-size: 0.9em;
+      color: #888;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 10px 0;
+    }
+
+    .blog-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      justify-content: center;
+    }
+
+    .blog-gallery img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .image-overlay {
+      position: relative;
+    }
+
+    .image-overlay::after {
+      content: attr(data-extra);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+    }
+
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    #lightbox-prev.hidden,
+    #lightbox-next.hidden {
+      display: none;
+    }
+
+    .lightbox.hidden {
+      display: none;
+    }
+
+    #lightbox-img {
+      max-height: 60vh;
+      max-width: 90%;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    #lightbox-caption {
+      color: #ccc;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    #lightbox-thumbnails {
+      display: flex;
+      overflow-x: auto; 
+      overflow-y: hidden;
+      white-space: nowrap;
+      padding: 0.5rem;
+      gap: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: #ccc transparent;
+    }
+
+    #lightbox-thumbnails::-webkit-scrollbar {
+      height: 6px; 
+    }
+
+    #lightbox-thumbnails::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      border-radius: 3px;
+    }
+
+    #lightbox-thumbnails {
+      -webkit-overflow-scrolling: touch; 
+      scroll-behavior: smooth;
+    }
+
+    #lightbox-thumbnails img {
+      height: 60px; 
+      width: auto;  
+      border-radius: 6px;
+      opacity: 0.6;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    #lightbox-thumbnails img.active,
+    #lightbox-thumbnails img:hover {
+      opacity: 1;
+    }
+
+    #lightbox-thumbnails img {
+      display: inline-block;
+    }
+
+    #lightbox-thumbnails img.active {
+      margin-left: 10px; 
+      margin-right: 10px;
+    }
+
+
+    #lightbox-close {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+    }
+
+    @media (min-width: 600px) {
+      .blog-gallery img {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
+    .share-button {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.9em;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.2s;
+    }
+
+    .share-button:hover {
+      background-color: #555;
+    }
+
+    #lightbox-arrows {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0px 40px;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-arrow {
+      pointer-events: auto;
+      background: #111;
+      color: #eee; 
+      border: none;
+      padding: 15px 15px;
+      font-size: 28px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background-color 0.3s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    }
+
+    .lightbox-arrow:hover {
+      background-color: #000;
+      color: #fff;
+    }
+
+    .copy-msg {
+      font-size: 0.85em;
+      color: #667;
+      margin-left: 8px;
+      position: absolute;
+      bottom: 15px;
+      right: 135px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .copy-msg.visible {
+      opacity: 1;
+    }
+
+    #searchBar {
+      width: 250px; 
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 25px; 
+    }
+
+    /* Contact Style Section */
+    .contact-heading {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .contact-subtext {
+      text-align: center;
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .tab-content#contact.active {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 30px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    #contact {
+      padding: 20px;
+    }
+
+    .contact-form {
+      width: 100%;
+      max-width: 500px;
+      box-sizing: border-box;
+    }
+
+    #contact-form .form-control {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      box-sizing: border-box;
+    }
+
+    #contact-form .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+
+    #contact-form label {
+      margin-bottom: 6px;
+      font-weight: bold;
+      font-size: 14px;
+      color: #555;
+    }
+
+    #contact-form .btn-primary {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #contact-form .btn-primary:hover {
+      background-color: #555;
+    }
+
+    #contact-message {
+      resize: vertical;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Body Section for Accent Images -->
+  <img src="images/symbolaccentleft.png" class="accent-left" alt="Accent Symbol">
+  <img src="images/symbolaccentright.png" class="accent-right" alt="Accent Symbol">
+
+  <!-- Body Section for General -->
+  <header>
+    <nav>
+      <a href="#home" id="home-link" onclick="showTab('home', event)">Home</a>
+      <a href="#projects" id="projects-link" onclick="showTab('projects', event)">Projects</a>
+      <a href="#blog" id="blog-link" onclick="showTab('blog', event)">Blog</a>
+      <a href="#contact" id="contact-link" onclick="showTab('contact', event)">Contact</a>
+    </nav>
+  </header>
+
+  <!-- General Script-->
+  <script>
+    function showTab(tabName, event) {
+      if (event) event.preventDefault();
+
+      const allTabs = document.querySelectorAll('.tab-content');
+      allTabs.forEach(tab => tab.classList.remove('active'));
+
+      document.querySelectorAll('.article-page').forEach(page => {
+        page.style.display = 'none';
+      });
+
+      const allLinks = document.querySelectorAll('header nav a');
+      allLinks.forEach(link => link.classList.remove('active'));
+
+      const activeTab = document.getElementById(tabName);
+      if (activeTab) {
+        activeTab.classList.add('active');
+      }
+
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+      } else {
+        const activeLink = document.getElementById(tabName + '-link');
+        if (activeLink) activeLink.classList.add('active');
+      }
+
+      if (tabName === 'home') {
+        document.body.classList.add('homepage-active');
+      } else {
+        document.body.classList.remove('homepage-active');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+       showTab('home');
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+  <!-- Body section for Home Page -->
+  <div id="home" class="tab-content active">
+    <div id="homepage" class="intro-container">
+      <img src="images/headshot.png" class="headshot" alt="Headshot">
+      <div class="intro-text">
+        <h1>Hello, I'm</h1>
+        <h2>Ethan</h2>
+      </div>
+    </div>
+    <div 
+      x-data="scrollHint()" 
+      x-init="init()" 
+      x-show="visible" 
+      x-transition.opacity.duration.500ms
+      class="scroll-hint"
+    >
+      <button 
+        @click="scrollToBio()"
+        aria-label="Scroll down to bio section"
+        style="background: transparent; border: none; cursor: pointer; padding: 0;"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24" width="50" height="50">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+    </div>
+    <h2 class="text-center text-2xl font-semibold mt-8 mb-4">About Me</h2>
+    <div
+      x-data="{
+        expanded: false,
+        isMobile: window.innerWidth < 768,
+        updateScreen() {
+          this.isMobile = window.innerWidth < 768;
+        }
+      }"
+      x-init="updateScreen(); window.addEventListener('resize', updateScreen)"
+      x-bind:class="{ 'expanded': expanded && isMobile }"
+      class="bio-section relative"
+      id="bio-section"
+    >
+      <div
+        x-bind:style="expanded ? 'max-height: 2000px; overflow: visible;' : 'max-height: 280px; overflow: hidden;'"
+        class="transition-all duration-300 ease-in-out relative"
+      >
+        <p>
+          Hello, I'm <span style="color: #125fe9;">Ethan</span>. I'm a recent graduate of the University of Wisconsin–Madison, pursuing a career in power electronics research. To achieve this, I'm continuing my studies as a master's student at the WEMPEC lab, where I aim to deepen my knowledge of power conversion, control, wide bandgap devices, and EMI mitigation. Through my academic journey, I've built a strong foundation in electrical engineering and also gained professional experience in mechanical engineering, computer-aided design, and materials science.
+        </p>
+        <p>
+          Outside of work and school, I have a wide range of interests and fun ways to learn new things. Since I was little, I’ve been skiing with my family and enjoy spending time on the slopes, even in frigid temperatures. Throughout my youth, I was heavily involved in camping through scouting and family trips. More recently, I’ve challenged myself to take up hobbies that push me to learn new things. Some of these include amateur electronics, SDR NOAA/APT weather satellite imaging, and computer building. I also enjoy meterorology, genealogy, history, and art.
+        </p>
+        <p>
+          Otherwise, thank you for visiting my website and please contact me for any and all inquiries!
+        </p>
+        <div
+          x-show="!expanded"
+          class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-white to-transparent pointer-events-none"
+        ></div>
+      </div>
+        <button
+          x-show="!expanded"
+          @click="expanded = true"
+          class="read-more-btn absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 16l-6-6h12z"/>
+          </svg>
+        </button>
+      </div>
+    <h2 class="text-center text-2xl font-semibold mt-12 mb-6">Education</h2>
+    <div class="education-grid">
+      <div class="education-card" onClick="showArticle('WiscGrad')">
+        <div class="logo-box">
+          <img src="images/uwmadison-logo.png" alt="UW–Madison Logo" class="logo">
+        </div>  
+        <h3 class="text-xl font-bold mb-2">University of Wisconsin–Madison</h3>
+        <p>Master of Science in Electrical Engineering<br>2025–2027</p>
+      </div>
+
+      <div class="education-card" onClick="showArticle('WiscUnder')">
+        <div class="logo-box">
+          <img src="images/uwmadison-logo.png" alt="UW–Madison Logo" class="logo">
+        </div>  
+        <h3 class="text-xl font-bold mb-2">University of Wisconsin–Madison</h3>
+        <p>Bachelor of Science in Electrical Engineering<br>2021–2025</p>
+      </div>
+    </div>
+    <h2 class="text-center text-2xl font-semibold mt-12 mb-6">Experience</h2>
+    <div class="experience-grid">
+      <div class="experience-card" onClick="showArticle('Eaton2025')">
+        <div class="logo-box">
+          <img src="images/eaton-logo.png" alt="Eaton Logo" class="logo">
+        </div>
+        <h3 class="text-xl font-bold mb-2">Eaton Research Labs</h3>
+        <p>Electrical Engineering Intern<br>Summer 2025</p>
+      </div>
+
+      <div class="experience-card" onClick="showArticle('WEMPEC2025')">
+        <div class="logo-box">
+          <img src="images/wempec-logo.png" alt="WEMPEC Logo" class="logo">
+        </div>  
+        <h3 class="text-xl font-bold mb-2">WEMPEC LAB</h3>
+        <p>Research Lab Technician<br>Spring 2025</p>
+      </div>
+
+      <div class="experience-card" onClick="showArticle('Eaton2024')">
+        <div class="logo-box">
+          <img src="images/eaton-logo.png" alt="Eaton Logo" class="logo">
+        </div>  
+        <h3 class="text-xl font-bold mb-2">Eaton Research Labs</h3>
+        <p>Electrical Engineering Intern<br>Summer 2024</p>
+      </div>
+
+      <div class="experience-card" onClick="showArticle('Eaton2023')">
+        <div class="logo-box">
+          <img src="images/eaton-logo.png" alt="Eaton Logo" class="logo">
+        </div>
+        <h3 class="text-xl font-bold mb-2">Eaton Research Labs</h3>
+        <p>Mechanical Engineering Intern<br>Summer 2023</p>
+      </div>
+
+      <div class="experience-card" onClick="showArticle('Sierra')">
+        <div class="logo-box">
+          <img src="images/sierra-logo.png" alt="Sierra Logo" class="logo">
+        </div>  
+        <h3 class="text-xl font-bold mb-2">Sierra</h3>
+        <p>Retail Associate<br>2020-2023</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grad Description -->
+  <div id="WiscGrad" class="article-page" style="display: none;">
+    <button onClick="goBack()" class="btn-primary" style="position: absolute; top: 4.5rem; left: 1rem;">
+      ← Back
+    </button>
+    <h2>Graduate Experience at WEMPEC</h2>
+    <p>Ongoing...</p>
+  </div>
+
+  <!-- Undergrad Description -->
+  <div id="WiscUnder" class="article-page" style="display: none;">
+    <button onClick="goBack()" class="btn-primary" style="position: absolute; top: 4.5rem; left: 1rem;">
+      ← Back
+    </button>
+    <h2>Undergraduate Experience at UW-Madison</h2>
+    <p>Undergrade was...</p>
+  </div>
+
+  <!-- Eaton 2025 Description -->
+  <div id="Eaton2025" class="article-page" style="display: none;">
+    <button onClick="goBack()" class="btn-primary" style="position: absolute; top: 4.5rem; left: 1rem;">
+      ← Back
+    </button>
+    <h2>Eaton 2025 Experience</h2>
+    <p>Here’s everything I did as an EE intern at Eaton in 2025...</p>
+  </div>
+
+  <!-- WEMPEC 2025 Description -->
+  <div id="WEMPEC2025" class="article-page" style="display: none;">
+    <button onClick="goBack()" class="btn-primary" style="position: absolute; top: 4.5rem; left: 1rem;">
+      ← Back
+    </button>
+    <h2>Eaton 2025 Experience</h2>
+    <p>Here’s everything I did at WEMPEC...</p>
+  </div>
+
+  <!-- Eaton 2024 Description-->
+  <div id="Eaton2024" class="article-page" style="display: none;">
+    <button onClick="goBack()" class="btn-primary" style="position: absolute; top: 4.5rem; left: 1rem;">
+      ← Back
+    </button>
+    <h2>Eaton 2025 Experience</h2>
+    <p>Here’s everything I did as an EE intern at Eaton in 2024...</p>
+  </div>
+
+  <!-- Eaton 2023 Description -->
+  <div id="Eaton2023" class="article-page" style="display: none;">
+    <button onClick="goBack()" class="btn-primary" style="position: absolute; top: 4.5rem; left: 1rem;">
+      ← Back
+    </button>
+    <h2>Eaton 2025 Experience</h2>
+    <p>Here’s everything I did as an ME intern at Eaton in 2023...</p>
+  </div>
+
+  <!-- Sierra Description -->
+  <div id="Sierra" class="article-page" style="display: none;">
+    <button onClick="goBack()" class="btn-primary" style="position: absolute; top: 4.5rem; left: 1rem;">
+      ← Back
+    </button>
+
+    <div class="article-content"> 
+      <h2>Sierra Experience</h2>
+      <p>
+        What? Seriously? Sierra? Retail Worker? I'm including my high school job on my experience??? Yes, although this job doesn't align with my technical interests, this was still a special and impactful time that shaped who I
+         am today, so I could not in good conscience leave out an important stage in my professional development and life.
+      </p>
+      <p>
+        Sierra (formerly known as Sierra trading post) is a outdoor apparel and gear retail store owned by TJX, this was my first job when I was in highschool. I originally planned on working there in 2019, but I wanted to focus
+         on my eagle scout project before I started working. A few months later, I started the application process, but COVID delayed this even further. Eventually I started working on July 20th, 2020.
+      </p>
+      <p>
+        <img src="images/sierra-bkid.jpg" alt="Sierra Bkid" class="float-right clickable-img" onclick="openArticleImageLightbox(this.src)" style="cursor: pointer;">
+        I started working at Sierra mainly because both of my siblings worked there already. Looking back, I don't think we would have been able to share a car in between the three of us if that wasn’t the case! Another reason
+         was because I enjoyed the outdoors, especially at that time in my life, which fit in with the theme of the store. 
+      </p>
+      <p>
+        My start at Sierra was absolutely a baptism by fire. I was put up front on the registers for five, eight hour shifts for five consecutive days, which at the time was a pretty crazy foray into working. The first day was my
+         orientation and training from my brother of all people. Next was just 
+      </p>
+      <p>
+        <img src="images/sierra-aaron.jpg" alt="Sierra Aaron" class="float-left clickable-img" onclick="openArticleImageLightbox(this.src)" style="cursor: pointer;">
+        After working up front for a few weeks, I went to the gear department. They told me they did this so that my siblings and I would all be in different departments but honestly I was just relieved that I didn’t have to be up
+         front. In the gear department I started working on
+      </p>
+      <p>
+        <img src="images/sierra-backroom.jpg" alt="Sierra Backroom" class="float-right clickable-img" onclick="openArticleImageLightbox(this.src)" style="cursor: pointer;">
+        Throughout my time there I sometimes worked in the back, which was by far and away my favorite position there. In the backroom I worked on receiving and processing the merchandise. This was a really interesting and fun
+         environment due to it being an isolated corner of the store and was usually pretty chill. More notably, the people in the backroom were also great and fun to work with. In particular, the backroom coordinator there,
+          Cam, was a really great guy who I admired for his decisive yet laid back spirit. Because we were so efficient with the processing, we always spent a lot of time in between shipments challenging ourselves in fun ways,
+           like seeing if we can unbox enough shoes to build a tower, or if we could break the unboxing record. As time went on and many of the people who I started to work with when I started left, the backroom became a little
+            less enjoyable. On top of this, corporate started forcing us to follow a pretty unenjoyable assembly-line-like process that would allow us to process 6 boxes an hour, which is a lot less than our rate before then.
+             Regardless, working in the backroom was a good experience, especially on the thursday nights in highschool where I could throw in my air pods and listen to the recorded zoom classes of the content that was going
+              to be on the friday quizzes.
+      </p>
+      <p>
+        <img src="images/sierra-roof.jpg" alt="Sierra Roof" class="float-left clickable-img" onclick="openArticleImageLightbox(this.src)" style="cursor: pointer;">
+        Some of my favorite memories there (roof) (covid) ().
+      </p>
+      <p>
+        On what ended up being my last day, I figured that my time there was wrapping up. At that time, I was one of the college kids now, everyone was younger than me and 
+      </p>
+      <p>
+        I suppose one could say this was just a highschool job and nothing more, and to a degree, they'd be right. Believe it or not, the retail experience was not gripping enough to inspire me to pursue a career dealing with angry
+         customers trying to use an empty gift card. If nothing else, working at Sierra gave me something to do with my time, and gave me some spending money through my upperclassmen years of highschool and well into college. But
+          more importantly, I think the people, and the experience working with my siblings will always be something I admittedly will look back fondly on.
+      </p>
+    </div>
+  </div>
+
+  <!-- Light Box functionality -->
+  <div id="article-single-image-lightbox"
+      style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+              background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:10000;"
+      onclick="closeArticleImageLightbox()">
+    <img id="article-lightbox-img" src="">
+    <button id="article-lightbox-close" onclick="closeArticleImageLightbox()">×</button>
+  </div>
+
+  <script>
+    function openArticleImageLightbox(src) {
+      const lightbox = document.getElementById('article-single-image-lightbox');
+      const img = document.getElementById('article-lightbox-img');
+      img.src = src;
+      lightbox.style.display = 'flex';
+    }
+    function closeArticleImageLightbox() {
+      const lightbox = document.getElementById('article-single-image-lightbox');
+      lightbox.style.display = 'none';
+    }
+
+    document.addEventListener('keydown', function (event) {
+      const lightbox = document.getElementById('article-single-image-lightbox');
+      if (event.key === 'Escape' && lightbox.style.display === 'flex') {
+        closeArticleImageLightbox();
+      }
+    });
+  </script>
+
+  <!-- Script for Home Page -->
+  <script>
+  window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+  };
+
+  //Involves the hint arrow and auto scroll
+    function scrollHint() {
+      return {
+        visible: false,
+        init() {
+          const showArrow = () => {
+            if (window.scrollY === 0) {
+              this.visible = true;
+            }
+          };
+
+          this.timeoutId = setTimeout(showArrow, 3000);
+
+          window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+              this.visible = false;
+              clearTimeout(this.timeoutId);
+            }
+          });
+
+          const homeEl = document.getElementById('home');
+          if (homeEl) {
+            const observer = new MutationObserver((mutations) => {
+              mutations.forEach(mutation => {
+                if (
+                  mutation.attributeName === 'class' && 
+                  homeEl.classList.contains('active')
+                ) {
+                  this.visible = false;
+                  clearTimeout(this.timeoutId);
+                  this.timeoutId = setTimeout(showArrow, 3000);
+                }
+              });
+            });
+            observer.observe(homeEl, { attributes: true });
+          }
+        },
+        scrollToBio() {
+          const bio = document.getElementById('bio-section');
+          if (bio) {
+            const yOffset = -115;
+            const y = bio.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }
+      }
+    }
+
+    //Open article
+    function showArticle(id) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+
+      document.querySelectorAll('.article-page').forEach(page => {
+        page.style.display = 'none';
+      });
+
+      const article = document.getElementById(id);
+      if (article) {
+        article.style.display = 'block';
+        window.scrollTo(0, 0);
+      }
+
+      document.body.classList.remove('homepage-active');
+      document.body.classList.add('article-active');
+    }
+
+    //Close article
+    function goBack() {
+      document.querySelectorAll('.article-page').forEach(page => {
+        page.style.display = 'none';
+      });
+
+      const homeTab = document.getElementById('home');
+      if (homeTab) {
+        homeTab.classList.add('active');
+      }
+
+      document.querySelectorAll('header nav a').forEach(link => {
+        link.classList.remove('active');
+      });
+
+      const homeLink = document.getElementById('home-link');
+      if (homeLink) {
+        homeLink.classList.add('active');
+      }
+
+      document.body.classList.add('homepage-active');
+      document.body.classList.remove('article-active');
+    }
+
+    //Check to see if there is an uneven amount of cards
+    document.addEventListener('DOMContentLoaded', () => {
+      const grids = document.querySelectorAll('.education-grid');
+      grids.forEach(grid => {
+        const cards = grid.querySelectorAll('.education-card');
+        if (cards.length % 2 !== 0) {
+          grid.classList.add('odd');
+        }
+      });
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+      const grids = document.querySelectorAll('.experience-grid');
+      grids.forEach(grid => {
+        const cards = grid.querySelectorAll('.experience-card');
+        if (cards.length % 2 !== 0) {
+          grid.classList.add('odd');
+        }
+      });
+    });
+  </script>
+
+  <!-- Body Section for Blog -->
+  <div id="blog" class="tab-content">
+    <h2>Blog</h2>
+
+    <!-- ***Searchbar Definition*** -->
+    <input type="text" id="searchBar" placeholder="Search posts..." oninput="filterPosts()">
+
+    <!-- ***No image response*** -->
+    <img id="no-results-image" src="images/404notfound.png" alt="No results found" style="display:none; max-width:300px; margin: 20px auto;"> 
+
+    <!-- MORE BLOG POSTS GO HERE -->
+
+    <!-- Blog Post2  -->
+    <!-- UPDATE:PostID -->
+    <div id="post-may1025" class="blog-post">
+      <!-- UPDATE:Date -->
+      <div class="blog-date">May 10, 2025</div>
+      <!-- UPDATE: Post Title -->
+      <h3>Undergraduate Graduation</h3>
+      <!-- UPDATE: Post -->
+      <p>
+        Today I graduated with my undergraduate degree in Electrical Engineering from the University of Wisconsin Madison! After switching my major from Mechanical Engineering to Electrical Engineering in between my sophomore and junior year, I have been incredibly busy the previous two years catching up in the Electrical Engineering curriculum.
+      <p>
+      <p> 
+        But today, all the hard work finally paid off. I looked at graduating in time despite switching my major as a first step in becoming a power electronics researcher, which is my long term goal now that I have graduated.
+      <p>
+      <p>
+        For my next chapter, I will be starting graduate school at the WEMPEC lab at the University of Wisconsin-Madison in the fall. Here, I hope to study power electronics specifically in power conversion. 
+      <p>
+      </p>
+        Despite me graduating and coming right back next August, I am still very proud of today, and want to relish in my hard work and celebrate a huge milestone in my life!
+      </p>
+      <!-- UPDATE: Pictures and their captions -->
+      <!-- UPDATE: Gallery ID -->
+      <div class="blog-gallery" id="gallery-may1025"
+        data-images='["images/blog2-img1.jpg", "images/blog2-img2.jpg", "images/blog2-img3.jpg"]'
+        data-captions='["", "", ""]'>
+      </div>
+      <!-- UPDATE:PostID -->
+      <button class="share-button" onclick="copyLink('post-may1025', this)">Copy Post Link</button>
+      <span class="copy-msg">Link copied!</span>
+    </div>
+
+    <!-- Blog Post1  -->
+    <!-- UPDATE:PostID -->
+    <div id="post-apr1625" class="blog-post">
+      <!-- UPDATE:Date -->
+      <div class="blog-date">April 16, 2025</div>
+      <!-- UPDATE: Post Title -->
+      <h3>Test</h3>
+      <!-- UPDATE: Post -->
+      <p>
+        I am working on expanding this blog section of my website first.
+        <span class="open-figure" data-index="0" data-gallery-id="gallery-apr1625"
+          style="color:#125fe9; text-decoration:underline; cursor:pointer;">
+          Figure 1
+        </span>is a test image.
+        <span class="open-figure" data-index="4" data-gallery-id="gallery-apr1625"
+          style="color:#125fe9; text-decoration:underline; cursor:pointer;">
+          Figure 5
+        </span>is also a test image.
+      </p>
+      <!-- UPDATE: Pictures and their captions -->
+      <!-- UPDATE: Gallery ID -->
+      <div class="blog-gallery" id="gallery-apr1625"
+        data-images='["images/blog1-img1.jpg", "images/blog1-img2.jpg", "images/blog1-img3.jpg", "images/blog1-img4.jpg", "images/blog1-img5.jpg", "images/blog1-img6.jpg"]'
+        data-captions='["Senior year photo", "Optical illusion", "My friend Lucas", "Drone picture of Milwaukee I took in 2021", "An image I downloaded in 2007"]'>
+      </div>
+      <!-- UPDATE:PostID -->
+      <button class="share-button" onclick="copyLink('post-apr1625', this)">Copy Post Link</button>
+      <span class="copy-msg">Link copied!</span>
+    </div>
+
+    <!-- Blog Post0  -->
+    <!-- UPDATE:PostID -->
+    <div id="post-apr1525" class="blog-post">
+      <!-- UPDATE:Date -->
+      <div class="blog-date">April 15, 2025</div>
+      <!-- UPDATE: Post Title -->
+      <h3>First Blog Post</h3>
+      <!-- UPDATE: Post -->
+      <p>
+        Today I created my first website! I'm planning on updating this website in the future and want to challenge
+        myself to create something that reflects my creativity and individuality.
+        <span class="open-figure" data-index="0" data-gallery-id="gallery-apr1525"
+          style="color:#125fe9; text-decoration:underline; cursor:pointer;">
+          Figure 1
+        </span>shows what the website looked like on day 1!
+      </p>
+      <!-- UPDATE: Pictures and their captions -->
+      <!-- UPDATE: Gallery ID -->
+      <div class="blog-gallery" id="gallery-apr1525" data-images='["images/blog0-img1.jpg"]'
+        data-captions='["Website on day one"]'>
+      </div>
+      <!-- UPDATE:PostID -->
+      <button class="share-button" onclick="copyLink('post-apr1525', this)">Copy Post Link</button>
+      <span class="copy-msg">Link copied!</span>
+    </div>
+
+  </div>
+
+  <!-- ***Lightbox Definition*** -->
+  <div id="lightbox-modal" class="lightbox hidden">
+    <span id="lightbox-close">&times;</span>
+    <div id="lightbox-arrows">
+      <button id="lightbox-prev" class="lightbox-arrow left" onclick="goToPrevious()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none"/>
+        </svg>
+      </button>
+      
+      <button id="lightbox-next" class="lightbox-arrow right" onclick="goToNext()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor">
+          <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none"/>
+        </svg>
+      </button>
+    </div>
+    <img id="lightbox-img" src="" alt="">
+    <div id="lightbox-caption"></div>
+    <div class="lightbox-thumbnails" id="lightbox-thumbnails"></div>
+  </div>
+
+  <!-- ***Blog Script*** -->
+  <script>
+    // Second lightbox implementation using separate state variables
+    let lightboxImages = [];
+    let lightboxCaptions = [];
+    let currentIndex1 = 0;
+
+    // Initializes lightbox DOM elements
+    const modal = document.getElementById("lightbox-modal");
+    const modalImg = document.getElementById("lightbox-img");
+    const captionEl = document.getElementById("lightbox-caption");
+    const thumbnailsContainer = document.getElementById("lightbox-thumbnails");
+    const closeBtn = document.getElementById("lightbox-close");
+
+    // Closes the lightbox when the close button is clicked
+    closeBtn.onclick = () => {
+      modal.classList.add("hidden");
+    };
+
+    // Dynamically creates gallery thumbnails and overlay for each blog gallery
+    document.querySelectorAll('.blog-gallery').forEach(gallery => {
+      const images = JSON.parse(gallery.dataset.images);
+      const captions = gallery.dataset.captions ? JSON.parse(gallery.dataset.captions) : [];
+      const limited = images.slice(0, 4);
+
+      limited.forEach((img, index) => {
+        const imgEl = document.createElement("img");
+        imgEl.src = img;
+        imgEl.onclick = () => openLightbox(images, captions, index);
+
+        if (images.length > 4 && index === 3) {
+          const extra = images.length - 4;
+          const overlay = document.createElement("div");
+          overlay.className = "image-overlay";
+          overlay.setAttribute("data-extra", `+${extra}`);
+          overlay.appendChild(imgEl);
+          overlay.onclick = () => openLightbox(images, captions, 3);
+          gallery.appendChild(overlay);
+        } else {
+          gallery.appendChild(imgEl);
+        }
+      });
+    });
+
+    // Handles inline "Figure X" links that open a specific image in the lightbox
+    document.querySelectorAll('.open-figure').forEach(link => {
+      link.addEventListener('click', () => {
+        const index = parseInt(link.dataset.index);
+        const galleryId = link.dataset.galleryId;
+        const gallery = document.getElementById(galleryId);
+        const images = JSON.parse(gallery.dataset.images);
+        const captions = gallery.dataset.captions ? JSON.parse(gallery.dataset.captions) : [];
+        openLightbox(images, captions, index);
+      });
+    });
+
+    // Scrolls to anchor link on page load
+    window.addEventListener("load", () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const target = document.querySelector(hash);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    });
+
+    // Opens tab and scrolls to specific post if hash includes a tab and post ID
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash;
+      if (hash) {
+        let postId = null;
+
+        if (hash.includes(":")) {
+          const [tab, id] = hash.substring(1).split(":");
+          showTab(tab); 
+          postId = id;
+        } else if (hash.startsWith("#post-")) {
+          showTab("blog");
+          postId = hash.substring(1);
+        }
+
+        if (postId) {
+          setTimeout(() => {
+            const post = document.getElementById(postId);
+            if (post) {
+              post.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              history.replaceState(null, "", window.location.origin + window.location.pathname);
+            }
+          }, 100);
+        }
+      }
+    });
+
+    // Copies post URL to clipboard and briefly shows a success message
+    function copyLink(postId, button) {
+      const url = `${window.location.origin}${window.location.pathname}#${postId}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        // Modern async clipboard API
+        navigator.clipboard.writeText(url).then(() => {
+          showCopySuccess(button);
+        }).catch(() => {
+          fallbackCopyText(url, button);
+        });
+      } else {
+        // Fallback for older browsers
+        fallbackCopyText(url, button);
+      }
+    }
+
+    // Fallback function for unsupported environments
+    function fallbackCopyText(text, button) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";  // Avoid scrolling to the bottom
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          showCopySuccess(button);
+        } else {
+          alert("Copy to clipboard failed.");
+        }
+      } catch (err) {
+        alert("Copy to clipboard failed.");
+      }
+
+      document.body.removeChild(textarea);
+    }
+
+    // Shows a temporary success message next to the button
+    function showCopySuccess(button) {
+      const msg = button.nextElementSibling;
+      msg.classList.add("visible");
+      msg.style.display = "inline";
+      setTimeout(() => {
+        msg.classList.remove("visible");
+        msg.style.display = "none";
+      }, 2000);
+    }
+
+    // Opens lightbox and sets up thumbnails (redundant version)
+    function openLightbox(images, captions, index) {
+      lightboxImages = images;
+      lightboxCaptions = captions || [];
+      currentIndex1 = index;
+
+      modal.classList.remove("hidden");
+      modalImg.src = lightboxImages[index];
+      captionEl.textContent = lightboxCaptions[index] || "";
+
+      thumbnailsContainer.innerHTML = ""; 
+
+      lightboxImages.forEach((src, i) => {
+        const thumb = document.createElement("img");
+        thumb.src = src;
+        thumb.classList.toggle("active", i === index); 
+
+        thumb.addEventListener("click", () => {
+          currentIndex1 = i;
+          modalImg.src = lightboxImages[i];
+          captionEl.textContent = lightboxCaptions[i] || "";
+
+          thumbnailsContainer.querySelectorAll("img").forEach((img, idx) => {
+            img.classList.toggle("active", idx === i);
+          });
+
+          thumb.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        });
+
+        thumbnailsContainer.appendChild(thumb);
+      });
+
+      requestAnimationFrame(() => {
+        const activeThumb = thumbnailsContainer.querySelector("img.active");
+        if (activeThumb) {
+          activeThumb.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        }
+      });
+    }
+
+    // Updates image and caption based on current index
+    function updateLightbox() {
+      const modalImg = document.getElementById("lightbox-img");
+      const captionEl = document.getElementById("lightbox-caption");
+      const thumbnailsContainer = document.getElementById("lightbox-thumbnails");
+
+      modalImg.src = lightboxImages[currentIndex1];
+      captionEl.textContent = lightboxCaptions[currentIndex1];
+
+      Array.from(thumbnailsContainer.children).forEach((thumb, i) => {
+        if (i === currentIndex1) {
+          thumb.classList.add("active");
+        } else {
+          thumb.classList.remove("active");
+        }
+      });
+    }
+
+    // Navigates to previous image in second lightbox logic
+    document.getElementById("lightbox-prev").onclick = () => {
+      currentIndex1 = (currentIndex1 - 1 + lightboxImages.length) % lightboxImages.length;
+      updateLightbox();
+    };
+
+    // Navigates to next image in second lightbox logic
+    document.getElementById("lightbox-next").onclick = () => {
+      currentIndex1 = (currentIndex1 + 1) % lightboxImages.length;
+      updateLightbox();
+    };
+
+    // On load, opens blog tab and scrolls to post if hash starts with "post-"
+    window.addEventListener("DOMContentLoaded", () => {
+      const hash = window.location.hash;
+      if (hash.startsWith("#post-")) {
+        showTab("blog");
+        setTimeout(() => {
+          const postEl = document.querySelector(hash);
+          if (postEl) {
+            postEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 300);
+      }
+    });
+
+    // To updated lightbox picture as functions
+    function goToPrevious() {
+      currentIndex1 = (currentIndex1 - 1 + lightboxImages.length) % lightboxImages.length;
+      updateLightbox();
+    }
+
+    function goToNext() {
+      currentIndex1 = (currentIndex1 + 1) % lightboxImages.length;
+      updateLightbox();
+    }
+
+    // Use arrow keys to change pictures
+    document.addEventListener('keydown', function(event) {
+      if (event.key === "ArrowLeft") {
+        goToPrevious(); 
+      }
+      if (event.key === "ArrowRight") {
+        goToNext(); 
+      }
+    });
+
+    // Use esc to exit lightbox
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        const modal = document.getElementById("lightbox-modal");
+        if (!modal.classList.contains("hidden")) {
+          modal.classList.add("hidden");
+        }
+      }
+    });
+
+    // Swipe navigation for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', function(event) {
+      touchStartX = event.touches[0].clientX;
+    });
+
+    document.addEventListener('touchend', function(event) {
+      touchEndX = event.changedTouches[0].clientX;
+
+      if (touchStartX > touchEndX) {
+        goToNext(); 
+      } else if (touchStartX < touchEndX) {
+        goToPrevious(); 
+      }
+    });
+
+    // Function to filter blog posts based on search bar input
+    function filterPosts() {
+      const searchQuery = document.getElementById('searchBar').value.toLowerCase();
+      const posts = document.querySelectorAll('.blog-post');
+      const noResultsImage = document.getElementById('no-results-image');
+      let anyVisible = false;
+
+      posts.forEach(post => {
+        const postTitle = post.querySelector('h3') ? post.querySelector('h3').textContent.toLowerCase() : '';
+        const postContent = Array.from(post.querySelectorAll('p'))
+          .map(p => p.textContent.toLowerCase())
+          .join(' ');
+        const postDate = post.querySelector('.blog-date') ? post.querySelector('.blog-date').textContent.toLowerCase() : '';
+
+        const matches = postTitle.includes(searchQuery) ||
+                        postContent.includes(searchQuery) ||
+                        postDate.includes(searchQuery);
+
+        post.style.display = matches ? 'block' : 'none';
+        if (matches) anyVisible = true;
+      });
+
+      noResultsImage.style.display = anyVisible ? 'none' : 'block';
+    }
+  </script>
+
+  <!-- Body Section for Contact -->
+  <div id="contact" class="tab-content">
+    <div class="contact-form">
+      <h2 class="contact-heading">Get in Touch</h2>
+      <p class="contact-subtext">
+        Feel free to send a message if you have any questions, comments, or just want to say hi!
+      </p>
+
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="contact-email">Your email address</label>
+          <input type="email" name="user_email" class="form-control" id="contact-email" placeholder="Enter email..." required>
+        </div>
+
+        <div class="form-group">
+          <label for="contact-subject">Subject</label>
+          <input type="text" name="subject" class="form-control" id="contact-subject" placeholder="Enter subject..." required>
+        </div>
+
+        <div class="form-group">
+          <label for="contact-message">Message</label>
+          <textarea name="message" class="form-control" id="contact-message" placeholder="Enter message..." rows="6" required></textarea>
+        </div>
+
+        <p><button type="submit" class="btn btn-primary">Send Email</button></p>
+      </form>
+
+      <div id="contact-alert"></div>
+    </div>
+  </div>
+
+  <!-- Script Section for Contact -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init('IqdG_8vINJuznc4rQ');
+    })();
+
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      emailjs.sendForm('service_ezenker', 'template_n3y3vbo', this)
+        .then(function() {
+          document.getElementById('contact-alert').innerText = "Email sent successfully!";
+          document.getElementById('contact-form').reset();
+        }, function(error) {
+          document.getElementById('contact-alert').innerText = "Failed to send email: " + error.text;
+        });
+    });
+  </script>
+</body>
+</html>
