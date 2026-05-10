@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethan Zenker – Blog</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <img src="images/symbolaccentleft.png" class="accent-left" alt="Accent Symbol">
+  <img src="images/symbolaccentright.png" class="accent-right" alt="Accent Symbol">
+
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html" class="active-page">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div style="padding: 30px;">
+    <h2>Blog</h2>
+
+    <input type="text" id="searchBar" placeholder="Search posts..." oninput="filterPosts()">
+
+    <img id="no-results-image" src="images/404notfound.png" alt="No results found" style="display:none; max-width:300px; margin: 20px auto;">
+
+    <!-- MORE BLOG POSTS GO HERE -->
+
+    <!-- Blog Post2 -->
+    <div id="post-may1025" class="blog-post">
+      <div class="blog-date">May 10, 2025</div>
+      <h3>Undergraduate Graduation</h3>
+      <p>
+        Today I graduated with my undergraduate degree in Electrical Engineering from the University of Wisconsin Madison! After switching my major from Mechanical Engineering to Electrical Engineering in between my sophomore and junior year, I have been incredibly busy the previous two years catching up in the Electrical Engineering curriculum.
+      </p>
+      <p>
+        But today, all the hard work finally paid off. I looked at graduating in time despite switching my major as a first step in becoming a power electronics researcher, which is my long term goal now that I have graduated.
+      </p>
+      <p>
+        For my next chapter, I will be starting graduate school at the WEMPEC lab at the University of Wisconsin-Madison in the fall. Here, I hope to study power electronics specifically in power conversion.
+      </p>
+      <p>
+        Despite me graduating and coming right back next August, I am still very proud of today, and want to relish in my hard work and celebrate a huge milestone in my life!
+      </p>
+      <div class="blog-gallery" id="gallery-may1025"
+        data-images='["images/blog2-img1.jpg", "images/blog2-img2.jpg", "images/blog2-img3.jpg"]'
+        data-captions='["", "", ""]'>
+      </div>
+      <button class="share-button" onclick="copyLink('post-may1025', this)">Copy Post Link</button>
+      <span class="copy-msg">Link copied!</span>
+    </div>
+
+    <!-- Blog Post1 -->
+    <div id="post-apr1625" class="blog-post">
+      <div class="blog-date">April 16, 2025</div>
+      <h3>Test</h3>
+      <p>
+        I am working on expanding this blog section of my website first.
+        <span class="open-figure" data-index="0" data-gallery-id="gallery-apr1625"
+          style="color:#125fe9; text-decoration:underline; cursor:pointer;">
+          Figure 1
+        </span>is a test image.
+        <span class="open-figure" data-index="4" data-gallery-id="gallery-apr1625"
+          style="color:#125fe9; text-decoration:underline; cursor:pointer;">
+          Figure 5
+        </span>is also a test image.
+      </p>
+      <div class="blog-gallery" id="gallery-apr1625"
+        data-images='["images/blog1-img1.jpg", "images/blog1-img2.jpg", "images/blog1-img3.jpg", "images/blog1-img4.jpg", "images/blog1-img5.jpg", "images/blog1-img6.jpg"]'
+        data-captions='["Senior year photo", "Optical illusion", "My friend Lucas", "Drone picture of Milwaukee I took in 2021", "An image I downloaded in 2007"]'>
+      </div>
+      <button class="share-button" onclick="copyLink('post-apr1625', this)">Copy Post Link</button>
+      <span class="copy-msg">Link copied!</span>
+    </div>
+
+    <!-- Blog Post0 -->
+    <div id="post-apr1525" class="blog-post">
+      <div class="blog-date">April 15, 2025</div>
+      <h3>First Blog Post</h3>
+      <p>
+        Today I created my first website! I'm planning on updating this website in the future and want to challenge
+        myself to create something that reflects my creativity and individuality.
+        <span class="open-figure" data-index="0" data-gallery-id="gallery-apr1525"
+          style="color:#125fe9; text-decoration:underline; cursor:pointer;">
+          Figure 1
+        </span>shows what the website looked like on day 1!
+      </p>
+      <div class="blog-gallery" id="gallery-apr1525" data-images='["images/blog0-img1.jpg"]'
+        data-captions='["Website on day one"]'>
+      </div>
+      <button class="share-button" onclick="copyLink('post-apr1525', this)">Copy Post Link</button>
+      <span class="copy-msg">Link copied!</span>
+    </div>
+  </div>
+
+  <!-- Blog Lightbox -->
+  <div id="lightbox-modal" class="lightbox hidden">
+    <span id="lightbox-close">&times;</span>
+    <div id="lightbox-arrows">
+      <button id="lightbox-prev" class="lightbox-arrow left" onclick="goToPrevious()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none"/>
+        </svg>
+      </button>
+      <button id="lightbox-next" class="lightbox-arrow right" onclick="goToNext()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor">
+          <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none"/>
+        </svg>
+      </button>
+    </div>
+    <img id="lightbox-img" src="" alt="">
+    <div id="lightbox-caption"></div>
+    <div class="lightbox-thumbnails" id="lightbox-thumbnails"></div>
+  </div>
+
+  <script>
+    let lightboxImages = [];
+    let lightboxCaptions = [];
+    let currentIndex1 = 0;
+
+    const modal = document.getElementById("lightbox-modal");
+    const modalImg = document.getElementById("lightbox-img");
+    const captionEl = document.getElementById("lightbox-caption");
+    const thumbnailsContainer = document.getElementById("lightbox-thumbnails");
+    const closeBtn = document.getElementById("lightbox-close");
+
+    closeBtn.onclick = () => {
+      modal.classList.add("hidden");
+    };
+
+    document.querySelectorAll('.blog-gallery').forEach(gallery => {
+      const images = JSON.parse(gallery.dataset.images);
+      const captions = gallery.dataset.captions ? JSON.parse(gallery.dataset.captions) : [];
+      const limited = images.slice(0, 4);
+
+      limited.forEach((img, index) => {
+        const imgEl = document.createElement("img");
+        imgEl.src = img;
+        imgEl.onclick = () => openLightbox(images, captions, index);
+
+        if (images.length > 4 && index === 3) {
+          const extra = images.length - 4;
+          const overlay = document.createElement("div");
+          overlay.className = "image-overlay";
+          overlay.setAttribute("data-extra", `+${extra}`);
+          overlay.appendChild(imgEl);
+          overlay.onclick = () => openLightbox(images, captions, 3);
+          gallery.appendChild(overlay);
+        } else {
+          gallery.appendChild(imgEl);
+        }
+      });
+    });
+
+    document.querySelectorAll('.open-figure').forEach(link => {
+      link.addEventListener('click', () => {
+        const index = parseInt(link.dataset.index);
+        const galleryId = link.dataset.galleryId;
+        const gallery = document.getElementById(galleryId);
+        const images = JSON.parse(gallery.dataset.images);
+        const captions = gallery.dataset.captions ? JSON.parse(gallery.dataset.captions) : [];
+        openLightbox(images, captions, index);
+      });
+    });
+
+    // Scroll to post if URL has a #post- hash
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash;
+      if (hash.startsWith("#post-")) {
+        setTimeout(() => {
+          const postEl = document.querySelector(hash);
+          if (postEl) {
+            postEl.scrollIntoView({ behavior: "smooth", block: "start" });
+            history.replaceState(null, "", window.location.origin + window.location.pathname);
+          }
+        }, 100);
+      }
+    });
+
+    function copyLink(postId, button) {
+      const url = `${window.location.origin}${window.location.pathname}#${postId}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          showCopySuccess(button);
+        }).catch(() => {
+          fallbackCopyText(url, button);
+        });
+      } else {
+        fallbackCopyText(url, button);
+      }
+    }
+
+    function fallbackCopyText(text, button) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      try {
+        if (document.execCommand("copy")) {
+          showCopySuccess(button);
+        } else {
+          alert("Copy to clipboard failed.");
+        }
+      } catch (err) {
+        alert("Copy to clipboard failed.");
+      }
+      document.body.removeChild(textarea);
+    }
+
+    function showCopySuccess(button) {
+      const msg = button.nextElementSibling;
+      msg.classList.add("visible");
+      msg.style.display = "inline";
+      setTimeout(() => {
+        msg.classList.remove("visible");
+        msg.style.display = "none";
+      }, 2000);
+    }
+
+    function openLightbox(images, captions, index) {
+      lightboxImages = images;
+      lightboxCaptions = captions || [];
+      currentIndex1 = index;
+
+      modal.classList.remove("hidden");
+      modalImg.src = lightboxImages[index];
+      captionEl.textContent = lightboxCaptions[index] || "";
+
+      thumbnailsContainer.innerHTML = "";
+
+      lightboxImages.forEach((src, i) => {
+        const thumb = document.createElement("img");
+        thumb.src = src;
+        thumb.classList.toggle("active", i === index);
+
+        thumb.addEventListener("click", () => {
+          currentIndex1 = i;
+          modalImg.src = lightboxImages[i];
+          captionEl.textContent = lightboxCaptions[i] || "";
+          thumbnailsContainer.querySelectorAll("img").forEach((img, idx) => {
+            img.classList.toggle("active", idx === i);
+          });
+          thumb.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        });
+
+        thumbnailsContainer.appendChild(thumb);
+      });
+
+      requestAnimationFrame(() => {
+        const activeThumb = thumbnailsContainer.querySelector("img.active");
+        if (activeThumb) {
+          activeThumb.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        }
+      });
+    }
+
+    function updateLightbox() {
+      modalImg.src = lightboxImages[currentIndex1];
+      captionEl.textContent = lightboxCaptions[currentIndex1] || "";
+      Array.from(thumbnailsContainer.children).forEach((thumb, i) => {
+        thumb.classList.toggle("active", i === currentIndex1);
+      });
+    }
+
+    document.getElementById("lightbox-prev").onclick = () => {
+      currentIndex1 = (currentIndex1 - 1 + lightboxImages.length) % lightboxImages.length;
+      updateLightbox();
+    };
+
+    document.getElementById("lightbox-next").onclick = () => {
+      currentIndex1 = (currentIndex1 + 1) % lightboxImages.length;
+      updateLightbox();
+    };
+
+    function goToPrevious() {
+      currentIndex1 = (currentIndex1 - 1 + lightboxImages.length) % lightboxImages.length;
+      updateLightbox();
+    }
+
+    function goToNext() {
+      currentIndex1 = (currentIndex1 + 1) % lightboxImages.length;
+      updateLightbox();
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === "ArrowLeft") goToPrevious();
+      if (event.key === "ArrowRight") goToNext();
+      if (event.key === "Escape" && !modal.classList.contains("hidden")) {
+        modal.classList.add("hidden");
+      }
+    });
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', function (event) {
+      touchStartX = event.touches[0].clientX;
+    });
+
+    document.addEventListener('touchend', function (event) {
+      touchEndX = event.changedTouches[0].clientX;
+      if (touchStartX > touchEndX) {
+        goToNext();
+      } else if (touchStartX < touchEndX) {
+        goToPrevious();
+      }
+    });
+
+    function filterPosts() {
+      const searchQuery = document.getElementById('searchBar').value.toLowerCase();
+      const posts = document.querySelectorAll('.blog-post');
+      const noResultsImage = document.getElementById('no-results-image');
+      let anyVisible = false;
+
+      posts.forEach(post => {
+        const postTitle = post.querySelector('h3') ? post.querySelector('h3').textContent.toLowerCase() : '';
+        const postContent = Array.from(post.querySelectorAll('p')).map(p => p.textContent.toLowerCase()).join(' ');
+        const postDate = post.querySelector('.blog-date') ? post.querySelector('.blog-date').textContent.toLowerCase() : '';
+        const matches = postTitle.includes(searchQuery) || postContent.includes(searchQuery) || postDate.includes(searchQuery);
+        post.style.display = matches ? 'block' : 'none';
+        if (matches) anyVisible = true;
+      });
+
+      noResultsImage.style.display = anyVisible ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>

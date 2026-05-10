@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethan Zenker – Contact</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <img src="images/symbolaccentleft.png" class="accent-left" alt="Accent Symbol">
+  <img src="images/symbolaccentright.png" class="accent-right" alt="Accent Symbol">
+
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html" class="active-page">Contact</a>
+    </nav>
+  </header>
+
+  <div class="contact-wrapper">
+    <div class="contact-form">
+      <h2 class="contact-heading">Get in Touch</h2>
+      <p class="contact-subtext">
+        Feel free to send a message if you have any questions, comments, or just want to say hi!
+      </p>
+
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="contact-email">Your email address</label>
+          <input type="email" name="user_email" class="form-control" id="contact-email" placeholder="Enter email..." required>
+        </div>
+
+        <div class="form-group">
+          <label for="contact-subject">Subject</label>
+          <input type="text" name="subject" class="form-control" id="contact-subject" placeholder="Enter subject..." required>
+        </div>
+
+        <div class="form-group">
+          <label for="contact-message">Message</label>
+          <textarea name="message" class="form-control" id="contact-message" placeholder="Enter message..." rows="6" required></textarea>
+        </div>
+
+        <p><button type="submit" class="btn btn-primary">Send Email</button></p>
+      </form>
+
+      <div id="contact-alert"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init('IqdG_8vINJuznc4rQ');
+    })();
+
+    document.getElementById('contact-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      emailjs.sendForm('service_ezenker', 'template_n3y3vbo', this)
+        .then(function () {
+          document.getElementById('contact-alert').innerText = "Email sent successfully!";
+          document.getElementById('contact-form').reset();
+        }, function (error) {
+          document.getElementById('contact-alert').innerText = "Failed to send email: " + error.text;
+        });
+    });
+  </script>
+</body>
+</html>
