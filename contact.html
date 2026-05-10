@@ -55,11 +55,9 @@
     </div>
   </div>
 
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
-    (function () {
-      emailjs.init('IqdG_8vINJuznc4rQ');
-    })();
+    emailjs.init({ publicKey: 'IqdG_8vINJuznc4rQ' });
 
     document.getElementById('contact-form').addEventListener('submit', function (event) {
       event.preventDefault();
