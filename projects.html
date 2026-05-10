@@ -10,6 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="nav.js" defer></script>
 </head>
 
 <body>
@@ -17,7 +18,8 @@
   <img src="images/symbolaccentright.png" class="accent-right" alt="Accent Symbol">
 
   <header>
-    <nav>
+    <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle navigation">&#9776;</button>
+    <nav id="main-nav">
       <a href="index.html">Home</a>
       <a href="projects.html" class="active-page">Projects</a>
       <a href="articles.html">Articles</a>
