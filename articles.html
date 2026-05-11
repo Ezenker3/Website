@@ -30,7 +30,76 @@
 
   <div style="padding: 30px;">
     <h2>Articles</h2>
-    <p>Coming soon!</p>
+
+    <input type="text" id="searchBar" placeholder="Search articles..." oninput="filterCards()">
+
+    <img id="no-results-image" src="images/404notfound.png" alt="No results found"
+      style="display:none; max-width:300px; margin: 20px auto;">
+
+    <!-- Article Feed -->
+    <!-- To add a card: copy a block, set onclick href to articles/your-page.html, update thumbnail, date, title, desc -->
+    <div class="article-feed">
+
+      <div class="article-news-card filterable-card"
+           data-href="articles/article-1.html"
+           onclick="window.location.href=this.dataset.href">
+        <div class="article-news-thumb" style="background-image: url('');"></div>
+        <div class="article-news-body">
+          <p class="article-news-date">Month DD, YYYY</p>
+          <h3 class="article-news-title">Article Title</h3>
+          <p class="article-news-desc">Short description shown on the card. Keep it to 1–2 sentences.</p>
+        </div>
+      </div>
+
+      <div class="article-news-card filterable-card"
+           data-href="articles/article-2.html"
+           onclick="window.location.href=this.dataset.href">
+        <div class="article-news-thumb" style="background-image: url('');"></div>
+        <div class="article-news-body">
+          <p class="article-news-date">Month DD, YYYY</p>
+          <h3 class="article-news-title">Article Title</h3>
+          <p class="article-news-desc">Short description shown on the card. Keep it to 1–2 sentences.</p>
+        </div>
+      </div>
+
+    </div>
   </div>
+
+  <script>
+    const searchCache = {};
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const cards = document.querySelectorAll('.filterable-card[data-href]');
+      await Promise.all(Array.from(cards).map(async card => {
+        const url = card.dataset.href;
+        try {
+          const res = await fetch(url);
+          const html = await res.text();
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const content = doc.querySelector('.article-content');
+          searchCache[url] = content ? content.textContent : '';
+        } catch {
+          searchCache[url] = '';
+        }
+      }));
+    });
+
+    function filterCards() {
+      const query = document.getElementById('searchBar').value.toLowerCase();
+      const cards = document.querySelectorAll('.filterable-card');
+      const noResults = document.getElementById('no-results-image');
+      let anyVisible = false;
+
+      cards.forEach(card => {
+        const cardText = card.textContent.toLowerCase();
+        const detailText = (searchCache[card.dataset.href] || '').toLowerCase();
+        const matches = cardText.includes(query) || detailText.includes(query);
+        card.style.display = matches ? '' : 'none';
+        if (matches) anyVisible = true;
+      });
+
+      noResults.style.display = anyVisible ? 'none' : 'block';
+    }
+  </script>
 </body>
 </html>

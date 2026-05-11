@@ -30,7 +30,72 @@
 
   <div style="padding: 30px;">
     <h2>Projects</h2>
-    <p>Coming soon!</p>
+
+    <input type="text" id="searchBar" placeholder="Search projects..." oninput="filterCards()">
+
+    <img id="no-results-image" src="images/404notfound.png" alt="No results found"
+      style="display:none; max-width:300px; margin: 20px auto;">
+
+    <!-- Project Card Grid -->
+    <!-- To add a card: copy a block, set href to projects/your-page.html, update background-image and title -->
+    <div class="project-card-grid">
+
+      <div class="project-thumb filterable-card"
+           data-href="projects/server.html"
+           onclick="window.location.href=this.dataset.href">
+        <div class="project-thumb-img" style="background-image: url('images/server-thumbnail.jpg');"></div>
+        <div class="thumb-overlay">
+          <h3 class="thumb-title">Server Build</h3>
+        </div>
+      </div>
+
+      <div class="project-thumb filterable-card"
+           data-href="projects/project-2.html"
+           onclick="window.location.href=this.dataset.href">
+        <div class="project-thumb-img" style="background-image: url('');"></div>
+        <div class="thumb-overlay">
+          <h3 class="thumb-title">Project Title</h3>
+        </div>
+      </div>
+
+    </div>
   </div>
+
+  <script>
+    const searchCache = {};
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const cards = document.querySelectorAll('.filterable-card[data-href]');
+      await Promise.all(Array.from(cards).map(async card => {
+        const url = card.dataset.href;
+        try {
+          const res = await fetch(url);
+          const html = await res.text();
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const content = doc.querySelector('.article-content');
+          searchCache[url] = content ? content.textContent : '';
+        } catch {
+          searchCache[url] = '';
+        }
+      }));
+    });
+
+    function filterCards() {
+      const query = document.getElementById('searchBar').value.toLowerCase();
+      const cards = document.querySelectorAll('.filterable-card');
+      const noResults = document.getElementById('no-results-image');
+      let anyVisible = false;
+
+      cards.forEach(card => {
+        const cardText = card.textContent.toLowerCase();
+        const detailText = (searchCache[card.dataset.href] || '').toLowerCase();
+        const matches = cardText.includes(query) || detailText.includes(query);
+        card.style.display = matches ? '' : 'none';
+        if (matches) anyVisible = true;
+      });
+
+      noResults.style.display = anyVisible ? 'none' : 'block';
+    }
+  </script>
 </body>
 </html>

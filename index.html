@@ -27,234 +27,130 @@
 
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
-  <!-- Home Content -->
-  <div id="home-content">
-    <div id="homepage" class="intro-container">
-      <img src="images/headshot.png" class="headshot" alt="Headshot">
-      <div class="intro-text">
-        <h1>Hello, I'm</h1>
-        <h2>Ethan</h2>
-      </div>
+  <div id="homepage" class="intro-container">
+    <img src="images/headshot.png" class="headshot" alt="Headshot">
+    <div class="intro-text">
+      <h1>Hello, I'm</h1>
+      <h2>Ethan</h2>
     </div>
+  </div>
 
-    <div
-      x-data="scrollHint()"
-      x-init="init()"
-      x-show="visible"
-      x-transition.opacity.duration.500ms
-      class="scroll-hint"
+  <div
+    x-data="scrollHint()"
+    x-init="init()"
+    x-show="visible"
+    x-transition.opacity.duration.500ms
+    class="scroll-hint"
+  >
+    <button
+      @click="scrollToBio()"
+      aria-label="Scroll down to bio section"
+      style="background: transparent; border: none; cursor: pointer; padding: 0;"
     >
-      <button
-        @click="scrollToBio()"
-        aria-label="Scroll down to bio section"
-        style="background: transparent; border: none; cursor: pointer; padding: 0;"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24" width="50" height="50">
-          <path d="M6 9l6 6 6-6"/>
-        </svg>
-      </button>
-    </div>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24" width="50" height="50">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </button>
+  </div>
 
-    <h2 class="text-center text-2xl font-semibold mt-8 mb-4">About Me</h2>
+  <h2 class="text-center text-2xl font-semibold mt-8 mb-4">About Me</h2>
+  <div
+    x-data="{
+      expanded: false,
+      isMobile: window.innerWidth < 768,
+      updateScreen() {
+        this.isMobile = window.innerWidth < 768;
+      }
+    }"
+    x-init="updateScreen(); window.addEventListener('resize', updateScreen)"
+    x-bind:class="{ 'expanded': expanded && isMobile }"
+    class="bio-section relative"
+    id="bio-section"
+  >
     <div
-      x-data="{
-        expanded: false,
-        isMobile: window.innerWidth < 768,
-        updateScreen() {
-          this.isMobile = window.innerWidth < 768;
-        }
-      }"
-      x-init="updateScreen(); window.addEventListener('resize', updateScreen)"
-      x-bind:class="{ 'expanded': expanded && isMobile }"
-      class="bio-section relative"
-      id="bio-section"
+      x-bind:style="expanded ? 'max-height: 2000px; overflow: visible;' : 'max-height: 280px; overflow: hidden;'"
+      class="transition-all duration-300 ease-in-out relative"
     >
+      <p>
+        Hello, I'm <span style="color: #125fe9;">Ethan</span>. I'm a graduate student at the University of Wisconsin–Madison, pursuing a career in power electronics research. I am proud to be involved in the WEMPEC Lab at UW-Madison, where I am working to develop a single stage AC-to-AC converter. Through my academic journey, I've built a strong foundation in electrical engineering and also gained professional experience in mechanical engineering, computer-aided design, and materials science.
+      </p>
+      <p>
+        Outside of work and school, I have a wide range of interests and fun ways to learn new things. Since I was little, I've been skiing with my family and enjoy spending time on the slopes, even in frigid temperatures. Throughout my youth, I was heavily involved in camping through scouting and family trips. More recently, I've challenged myself to take up hobbies that push me to learn new things. Some of these include amateur electronics, SDR NOAA/APT weather satellite imaging, and computer building. I also enjoy meterorology, genealogy, history, and art.
+      </p>
+      <p>
+        Otherwise, thank you for visiting my website and please contact me for any and all inquiries!
+      </p>
       <div
-        x-bind:style="expanded ? 'max-height: 2000px; overflow: visible;' : 'max-height: 280px; overflow: hidden;'"
-        class="transition-all duration-300 ease-in-out relative"
-      >
-        <p>
-          Hello, I'm <span style="color: #125fe9;">Ethan</span>. I'm a graduate student at the University of Wisconsin–Madison, pursuing a career in power electronics research. I am proud to be involved in the WEMPEC Lab at UW-Madison, where I am working to develop a single stage AC-to-AC converter. Through my academic journey, I've built a strong foundation in electrical engineering and also gained professional experience in mechanical engineering, computer-aided design, and materials science.
-        </p>
-        <p>
-          Outside of work and school, I have a wide range of interests and fun ways to learn new things. Since I was little, I've been skiing with my family and enjoy spending time on the slopes, even in frigid temperatures. Throughout my youth, I was heavily involved in camping through scouting and family trips. More recently, I've challenged myself to take up hobbies that push me to learn new things. Some of these include amateur electronics, SDR NOAA/APT weather satellite imaging, and computer building. I also enjoy meterorology, genealogy, history, and art.
-        </p>
-        <p>
-          Otherwise, thank you for visiting my website and please contact me for any and all inquiries!
-        </p>
-        <div
-          x-show="!expanded"
-          class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-white to-transparent pointer-events-none"
-        ></div>
-      </div>
-      <button
         x-show="!expanded"
-        @click="expanded = true"
-        class="read-more-btn absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M12 16l-6-6h12z"/>
-        </svg>
-      </button>
+        class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-white to-transparent pointer-events-none"
+      ></div>
+    </div>
+    <button
+      x-show="!expanded"
+      @click="expanded = true"
+      class="read-more-btn absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 16l-6-6h12z"/>
+      </svg>
+    </button>
+  </div>
+
+  <h2 class="text-center text-2xl font-semibold mt-12 mb-6">Education</h2>
+  <div class="education-grid">
+    <div class="education-card" onclick="window.location.href='education/wiscgrad.html'">
+      <div class="logo-box">
+        <img src="images/uwmadison-logo.png" alt="UW–Madison Logo" class="logo">
+      </div>
+      <h3 class="text-xl font-bold mb-2">University of Wisconsin–Madison</h3>
+      <p>Master of Science in Electrical Engineering<br>2025–2027</p>
     </div>
 
-    <h2 class="text-center text-2xl font-semibold mt-12 mb-6">Education</h2>
-    <div class="education-grid">
-      <div class="education-card" onclick="showArticle('WiscGrad')">
-        <div class="logo-box">
-          <img src="images/uwmadison-logo.png" alt="UW–Madison Logo" class="logo">
-        </div>
-        <h3 class="text-xl font-bold mb-2">University of Wisconsin–Madison</h3>
-        <p>Master of Science in Electrical Engineering<br>2025–2027</p>
+    <div class="education-card" onclick="window.location.href='education/wiscunder.html'">
+      <div class="logo-box">
+        <img src="images/uwmadison-logo.png" alt="UW–Madison Logo" class="logo">
       </div>
-
-      <div class="education-card" onclick="showArticle('WiscUnder')">
-        <div class="logo-box">
-          <img src="images/uwmadison-logo.png" alt="UW–Madison Logo" class="logo">
-        </div>
-        <h3 class="text-xl font-bold mb-2">University of Wisconsin–Madison</h3>
-        <p>Bachelor of Science in Electrical Engineering<br>2021–2025</p>
-      </div>
-    </div>
-
-    <h2 class="text-center text-2xl font-semibold mt-12 mb-6">Experience</h2>
-    <div class="experience-grid">
-      <div class="experience-card" onclick="showArticle('WEMPEC2025')">
-        <div class="logo-box">
-          <img src="images/wempec-logo.png" alt="WEMPEC Logo" class="logo">
-        </div>
-        <h3 class="text-xl font-bold mb-2">WEMPEC LAB</h3>
-        <p>Research Lab Technician<br>Spring 2025</p>
-      </div>
-
-      <div class="experience-card" onclick="showArticle('Eaton')">
-        <div class="logo-box">
-          <img src="images/eaton-logo.png" alt="Eaton Logo" class="logo">
-        </div>
-        <h3 class="text-xl font-bold mb-2">Eaton Research Labs</h3>
-        <p>Engineering Intern<br>Summers 2023–2025</p>
-      </div>
-
-      <div class="experience-card" onclick="showArticle('Sierra')">
-        <div class="logo-box">
-          <img src="images/sierra-logo.png" alt="Sierra Logo" class="logo">
-        </div>
-        <h3 class="text-xl font-bold mb-2">Sierra</h3>
-        <p>Retail Associate<br>2020–2023</p>
-      </div>
+      <h3 class="text-xl font-bold mb-2">University of Wisconsin–Madison</h3>
+      <p>Bachelor of Science in Electrical Engineering<br>2021–2025</p>
     </div>
   </div>
 
-  <!-- Article Pages -->
-  <div id="WiscGrad" class="article-page">
-    <button onclick="goBack()" class="btn-primary" style="position: absolute; top: 4.5rem; left: 1rem;">
-      ← Back
-    </button>
-    <h2>Graduate Experience at WEMPEC</h2>
-    <p>Ongoing...</p>
-  </div>
-
-  <div id="WiscUnder" class="article-page">
-    <button onclick="goBack()" class="btn-primary" style="position: absolute; top: 4.5rem; left: 1rem;">
-      ← Back
-    </button>
-    <h2>Undergraduate Experience at UW-Madison</h2>
-    <p>Undergrade was...</p>
-  </div>
-
-  <div id="Eaton" class="article-page">
-    <button onclick="goBack()" class="btn-primary" style="position: absolute; top: 4.5rem; left: 1rem;">
-      ← Back
-    </button>
-    <h2>Eaton Research Labs</h2>
-    <p>Coming soon...</p>
-  </div>
-
-  <div id="WEMPEC2025" class="article-page">
-    <button onclick="goBack()" class="btn-primary" style="position: absolute; top: 4.5rem; left: 1rem;">
-      ← Back
-    </button>
-    <h2>WEMPEC 2025 Experience</h2>
-    <p>Here's everything I did at WEMPEC...</p>
-  </div>
-
-  <div id="Sierra" class="article-page">
-    <button onclick="goBack()" class="btn-primary" style="position: absolute; top: 4.5rem; left: 1rem;">
-      ← Back
-    </button>
-    <div class="article-content">
-      <h2>Sierra Experience</h2>
-      <p>
-        What? Seriously? Sierra? Retail Worker? I'm including my high school job on my experience??? Yes, although this job doesn't align with my technical interests, this was still a special and impactful time that shaped who I
-        am today, so I could not in good conscience leave out an important stage in my professional development and life.
-      </p>
-      <p>
-        Sierra (formerly known as Sierra trading post) is a outdoor apparel and gear retail store owned by TJX, this was my first job when I was in highschool. I originally planned on working there in 2019, but I wanted to focus
-        on my eagle scout project before I started working. A few months later, I started the application process, but COVID delayed this even further. Eventually I started working on July 20th, 2020.
-      </p>
-      <p>
-        <img src="images/sierra-bkid.jpg" alt="Sierra Bkid" class="float-right clickable-img" onclick="openArticleImageLightbox(this.src)" style="cursor: pointer;">
-        I started working at Sierra mainly because both of my siblings worked there already. Looking back, I don't think we would have been able to share a car in between the three of us if that wasn't the case! Another reason
-        was because I enjoyed the outdoors, especially at that time in my life, which fit in with the theme of the store.
-      </p>
-      <p>
-        My start at Sierra was absolutely a baptism by fire. I was put up front on the registers for five, eight hour shifts for five consecutive days, which at the time was a pretty crazy foray into working. The first day was my
-        orientation and training from my brother of all people. Next was just
-      </p>
-      <p>
-        <img src="images/sierra-aaron.jpg" alt="Sierra Aaron" class="float-left clickable-img" onclick="openArticleImageLightbox(this.src)" style="cursor: pointer;">
-        After working up front for a few weeks, I went to the gear department. They told me they did this so that my siblings and I would all be in different departments but honestly I was just relieved that I didn't have to be up
-        front. In the gear department I started working on
-      </p>
-      <p>
-        <img src="images/sierra-backroom.jpg" alt="Sierra Backroom" class="float-right clickable-img" onclick="openArticleImageLightbox(this.src)" style="cursor: pointer;">
-        Throughout my time there I sometimes worked in the back, which was by far and away my favorite position there. In the backroom I worked on receiving and processing the merchandise. This was a really interesting and fun
-        environment due to it being an isolated corner of the store and was usually pretty chill. More notably, the people in the backroom were also great and fun to work with. In particular, the backroom coordinator there,
-        Cam, was a really great guy who I admired for his decisive yet laid back spirit. Because we were so efficient with the processing, we always spent a lot of time in between shipments challenging ourselves in fun ways,
-        like seeing if we can unbox enough shoes to build a tower, or if we could break the unboxing record. As time went on and many of the people who I started to work with when I started left, the backroom became a little
-        less enjoyable. On top of this, corporate started forcing us to follow a pretty unenjoyable assembly-line-like process that would allow us to process 6 boxes an hour, which is a lot less than our rate before then.
-        Regardless, working in the backroom was a good experience, especially on the thursday nights in highschool where I could throw in my air pods and listen to the recorded zoom classes of the content that was going
-        to be on the friday quizzes.
-      </p>
-      <p>
-        <img src="images/sierra-roof.jpg" alt="Sierra Roof" class="float-left clickable-img" onclick="openArticleImageLightbox(this.src)" style="cursor: pointer;">
-        Some of my favorite memories there (roof) (covid) ().
-      </p>
-      <p>
-        On what ended up being my last day, I figured that my time there was wrapping up. At that time, I was one of the college kids now, everyone was younger than me and
-      </p>
-      <p>
-        I suppose one could say this was just a highschool job and nothing more, and to a degree, they'd be right. Believe it or not, the retail experience was not gripping enough to inspire me to pursue a career dealing with angry
-        customers trying to use an empty gift card. If nothing else, working at Sierra gave me something to do with my time, and gave me some spending money through my upperclassmen years of highschool and well into college. But
-        more importantly, I think the people, and the experience working with my siblings will always be something I admittedly will look back fondly on.
-      </p>
+  <h2 class="text-center text-2xl font-semibold mt-12 mb-6">Experience</h2>
+  <div class="experience-grid">
+    <div class="experience-card" onclick="window.location.href='experience/wempec2025.html'">
+      <div class="logo-box">
+        <img src="images/wempec-logo.png" alt="WEMPEC Logo" class="logo">
+      </div>
+      <h3 class="text-xl font-bold mb-2">WEMPEC LAB</h3>
+      <p>Research Lab Technician<br>Spring 2025</p>
     </div>
-  </div>
 
-  <!-- Article Image Lightbox -->
-  <div id="article-single-image-lightbox"
-      onclick="closeArticleImageLightbox()">
-    <img id="article-lightbox-img" src="">
-    <button id="article-lightbox-close" onclick="closeArticleImageLightbox()">×</button>
+    <div class="experience-card" onclick="window.location.href='experience/eaton.html'">
+      <div class="logo-box">
+        <img src="images/eaton-logo.png" alt="Eaton Logo" class="logo">
+      </div>
+      <h3 class="text-xl font-bold mb-2">Eaton Research Labs</h3>
+      <p>Engineering Intern<br>Summers 2023–2025</p>
+    </div>
+
+    <div class="experience-card" onclick="window.location.href='experience/sierra.html'">
+      <div class="logo-box">
+        <img src="images/sierra-logo.png" alt="Sierra Logo" class="logo">
+      </div>
+      <h3 class="text-xl font-bold mb-2">Sierra</h3>
+      <p>Retail Associate<br>2020–2023</p>
+    </div>
   </div>
 
   <script>
-    window.onbeforeunload = function () {
-      window.scrollTo(0, 0);
-    };
-
     function scrollHint() {
       return {
         visible: false,
         init() {
           const showArrow = () => {
-            if (window.scrollY === 0) {
-              this.visible = true;
-            }
+            if (window.scrollY === 0) this.visible = true;
           };
-
           this.timeoutId = setTimeout(showArrow, 3000);
-
           window.addEventListener('scroll', () => {
             if (window.scrollY > 10) {
               this.visible = false;
@@ -265,63 +161,19 @@
         scrollToBio() {
           const bio = document.getElementById('bio-section');
           if (bio) {
-            const yOffset = -115;
-            const y = bio.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            const y = bio.getBoundingClientRect().top + window.pageYOffset - 115;
             window.scrollTo({ top: y, behavior: 'smooth' });
           }
         }
       };
     }
 
-    function showArticle(id) {
-      document.getElementById('home-content').style.display = 'none';
-      document.querySelectorAll('.article-page').forEach(page => {
-        page.style.display = 'none';
-      });
-      const article = document.getElementById(id);
-      if (article) {
-        article.style.display = 'block';
-        window.scrollTo(0, 0);
-      }
-      document.body.classList.add('article-active');
-    }
-
-    function goBack() {
-      document.querySelectorAll('.article-page').forEach(page => {
-        page.style.display = 'none';
-      });
-      document.getElementById('home-content').style.display = 'block';
-      document.body.classList.remove('article-active');
-    }
-
-    function openArticleImageLightbox(src) {
-      const lightbox = document.getElementById('article-single-image-lightbox');
-      const img = document.getElementById('article-lightbox-img');
-      img.src = src;
-      lightbox.style.display = 'flex';
-    }
-
-    function closeArticleImageLightbox() {
-      document.getElementById('article-single-image-lightbox').style.display = 'none';
-    }
-
-    document.addEventListener('keydown', function (event) {
-      const lightbox = document.getElementById('article-single-image-lightbox');
-      if (event.key === 'Escape' && lightbox.style.display === 'flex') {
-        closeArticleImageLightbox();
-      }
-    });
-
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.education-grid').forEach(grid => {
-        if (grid.querySelectorAll('.education-card').length % 2 !== 0) {
-          grid.classList.add('odd');
-        }
+        if (grid.querySelectorAll('.education-card').length % 2 !== 0) grid.classList.add('odd');
       });
       document.querySelectorAll('.experience-grid').forEach(grid => {
-        if (grid.querySelectorAll('.experience-card').length % 2 !== 0) {
-          grid.classList.add('odd');
-        }
+        if (grid.querySelectorAll('.experience-card').length % 2 !== 0) grid.classList.add('odd');
       });
     });
   </script>
