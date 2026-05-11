@@ -184,7 +184,7 @@ header nav a.active-page {
 
 @media (max-width: 768px) {
   .intro-container {
-    margin-top: 20px;
+    margin-top: 10px;
   }
 }
 
@@ -449,6 +449,7 @@ header nav a.active-page {
   display: block;
   height: 100%;
 }
+
 
 .logo-box {
   width: 100%;
@@ -1030,4 +1031,184 @@ h3 {
     min-width: 100%;
     height: 160px;
   }
+}
+
+/* ── Home Page Background Blobs ────────────────────── */
+.home-bg-blob {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  will-change: transform;
+}
+
+.home-blob-1 {
+  width: 700px;
+  height: 700px;
+  background: #125fe9;
+  opacity: 0.18;
+  top: -180px;
+  right: -120px;
+  filter: blur(90px);
+  animation: hblob1 24s ease-in-out infinite;
+}
+
+.home-blob-2 {
+  width: 520px;
+  height: 520px;
+  background: #f7630d;
+  opacity: 0.14;
+  bottom: -120px;
+  left: -100px;
+  filter: blur(80px);
+  animation: hblob2 30s ease-in-out infinite;
+}
+
+.home-blob-3 {
+  width: 340px;
+  height: 340px;
+  background: #ffc114;
+  opacity: 0.22;
+  top: 25%;
+  left: 8%;
+  filter: blur(60px);
+  animation: hblob3 18s ease-in-out infinite;
+}
+
+.home-blob-4 {
+  width: 420px;
+  height: 420px;
+  background: #125fe9;
+  opacity: 0.1;
+  top: 45%;
+  right: 8%;
+  filter: blur(70px);
+  animation: hblob4 36s ease-in-out infinite;
+}
+
+.home-blob-5 {
+  width: 260px;
+  height: 260px;
+  background: #f7630d;
+  opacity: 0.17;
+  bottom: 18%;
+  right: 12%;
+  filter: blur(50px);
+  animation: hblob5 21s ease-in-out infinite;
+}
+
+@keyframes hblob1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(-90px, 80px) scale(1.08); }
+}
+
+@keyframes hblob2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(70px, -60px) scale(0.92); }
+  66%      { transform: translate(-40px, 90px) scale(1.06); }
+}
+
+@keyframes hblob3 {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(70px, -90px); }
+}
+
+@keyframes hblob4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%      { transform: translate(-50px, 70px) scale(1.1); }
+  75%      { transform: translate(80px, -50px) scale(0.93); }
+}
+
+@keyframes hblob5 {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(-80px, -70px); }
+}
+
+@media (max-width: 768px) {
+  .home-blob-1 { width: 380px; height: 380px; filter: blur(60px); }
+  .home-blob-2 { width: 300px; height: 300px; filter: blur(55px); }
+  .home-blob-3 { width: 200px; height: 200px; filter: blur(45px); }
+  .home-blob-4 { width: 240px; height: 240px; filter: blur(50px); }
+  .home-blob-5 { width: 160px; height: 160px; filter: blur(40px); }
+}
+
+/* ── Home Page Particle Canvas ──────────────────────── */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ── Home Page Parallax Orbs ────────────────────────── */
+.p-orbs {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.p-orb {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.p-orb-1 {
+  width: 560px; height: 560px;
+  background: #125fe9;
+  opacity: 0.17;
+  top: -220px; left: -200px;
+  filter: blur(85px);
+}
+
+.p-orb-2 {
+  width: 400px; height: 400px;
+  background: #ffc114;
+  opacity: 0.19;
+  top: -130px; right: -140px;
+  filter: blur(68px);
+}
+
+.p-orb-3 {
+  width: 430px; height: 430px;
+  background: #f7630d;
+  opacity: 0.14;
+  top: 38%; left: -170px;
+  filter: blur(75px);
+}
+
+.p-orb-4 {
+  width: 490px; height: 490px;
+  background: #125fe9;
+  opacity: 0.12;
+  top: 42%; right: -180px;
+  filter: blur(90px);
+}
+
+.p-orb-5 {
+  width: 460px; height: 460px;
+  background: #ffc114;
+  opacity: 0.15;
+  bottom: -180px; left: -120px;
+  filter: blur(80px);
+}
+
+.p-orb-6 {
+  width: 350px; height: 350px;
+  background: #f7630d;
+  opacity: 0.13;
+  bottom: -120px; right: -100px;
+  filter: blur(65px);
+}
+
+@media (max-width: 768px) {
+  .p-orb-1 { width: 280px; height: 280px; top: -120px; left: -110px; filter: blur(55px); }
+  .p-orb-2 { width: 220px; height: 220px; top: -80px;  right: -80px;  filter: blur(45px); }
+  .p-orb-3 { width: 230px; height: 230px; left: -90px;  filter: blur(50px); }
+  .p-orb-4 { width: 250px; height: 250px; right: -100px; filter: blur(55px); }
+  .p-orb-5 { width: 240px; height: 240px; bottom: -100px; left: -70px; filter: blur(50px); }
+  .p-orb-6 { width: 190px; height: 190px; bottom: -70px; right: -60px; filter: blur(44px); }
 }
