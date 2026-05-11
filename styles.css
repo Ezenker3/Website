@@ -147,6 +147,30 @@ header nav a.active-page {
   font-family: 'Roboto', sans-serif;
 }
 
+.social-icons {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  margin-top: 0.9rem;
+}
+
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+
+.social-icons a:hover {
+  opacity: 0.5;
+}
+
+.social-icons svg {
+  width: 28px;
+  height: 28px;
+  fill: #333333;
+}
+
 @keyframes fadeInUp {
   from {
     transform: translateY(40px);
